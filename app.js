@@ -33,6 +33,8 @@ var bittrexapi = function(biturl) {
       pricesysbittrex = result.Last;
     };
 
+console.log('BittrexAPI result: ', bittrexapi);
+
 var cryptsyapi = function(biturl) {
       return $http({
         method: 'GET',
