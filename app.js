@@ -77,7 +77,9 @@ var sysprice = (pricesysbittrex + pricesyscryptsy) / 2;
 var btcprice = (pricebtcbtce + pricebtcbitstamp) / 2;
 
 var price = offerprice / btcprice / sysprice;
-console.log(price); // debug print for development
+console.log('Bittrex Price: ', pricesysbittrex);
+console.log('Bitstamp Price: ', pricebtcbitstamp);
+console.log('Final price in SYS: ', price); // debug print for development
 
 // update the offer
 
