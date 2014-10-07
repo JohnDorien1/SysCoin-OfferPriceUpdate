@@ -25,7 +25,7 @@ var pricesysbittrex = 0;
 var biturl='https://bittrex.com/api/v1.1/public/getticker?market=BTC-SYS';
 var cryptsyurl='http://pubapi.cryptsy.com/api.php?method=singlemarketdata&marketid=278';
 
-var bittrexapi = function(biturl) {
+var bittrexapi = function(biturl, $http) {
       return $http({
         method: 'GET',
         url: biturl
