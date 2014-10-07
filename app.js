@@ -19,9 +19,6 @@ var sysclient = new syscoin.Client({
 
 // Get SYS Prices
 
-var pricesyscryptsy = 0;
-var pricesysbittrex = 0;
-
 var biturl='https://bittrex.com/api/v1.1/public/getticker?market=BTC-SYS';
 var cryptsyurl='http://pubapi.cryptsy.com/api.php?method=singlemarketdata&marketid=278';
 
@@ -32,10 +29,6 @@ var bittrexapi = function(biturl) {
       });
     };
 
-bittrexapi.then(function(response){
-  pricesysbittrex = response.result.Last;
-  });
-  
 var cryptsyapi = function(biturl) {
       return $http({
         method: 'JSONP',
@@ -43,15 +36,10 @@ var cryptsyapi = function(biturl) {
       });
     };
 
-cryptsyapi.then(function(response){
-  pricesyscryptsy = response.return.markets.SYS.lasttradeprice;
-})
-
+var pricesyscryptsy = cryptsyapi.result.market.SYS.last;
+var pricesysbittrex = bittrexapi.result.Last;
 
 // Get BTC prices
-
-var pricebtcbtce = 0;
-var pricebtcbitstamp = 0;
 
 var btceurl = 'https://btc-e.com/api/3/ticker/btc_usd';
 var bitstampurl = 'https://www.bitstamp.net/api/ticker/';
@@ -63,10 +51,6 @@ var btceapi = function(biturl) {
       });
     };
 
-btceapi.then(function(response){
-  pricebtcbtce = response.btc_usd.last;
-});
-
 var bitstampapi = function(biturl) {
       return $http({
         method: 'JSONP',
@@ -74,9 +58,9 @@ var bitstampapi = function(biturl) {
       });
     };
     
-bitstampapi.then(function(response){
-  pricebtcbitstamp = response.last;
-});    
+
+var pricebtcbtce = btceapi.btc_usd.last;
+var pricebtcbitstamp = bitstampapi.last;   
     
 // Calc the averages and final price
 
