@@ -1,7 +1,7 @@
 //configs
 
 var offer = 'Put your offer ID here';
-var offerprice = 'Put your price in USD here';
+var offerprice = 500;
 
 
 // init submodules
