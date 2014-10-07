@@ -19,24 +19,27 @@ var sysclient = new syscoin.Client({
 
 // Get SYS Prices
 
+var pricesyscryptsy = 0;
+var pricesysbittrex = 0;
+
 var biturl='https://bittrex.com/api/v1.1/public/getticker?market=BTC-SYS';
 var cryptsyurl='http://pubapi.cryptsy.com/api.php?method=singlemarketdata&marketid=278';
 
 var bittrexapi = function(biturl) {
       return $http({
-        method: 'JSONP',
+        method: 'GET',
         url: biturl
       });
     };
 
 var cryptsyapi = function(biturl) {
       return $http({
-        method: 'JSONP',
+        method: 'GET',
         url: cryptsyurl
       });
+      pricesyscryptsy = result.market.SYS.last;
     };
 
-var pricesyscryptsy = cryptsyapi.result.market.SYS.last;
 var pricesysbittrex = bittrexapi.result.Last;
 
 // Get BTC prices
