@@ -45,6 +45,9 @@ var cryptsyapi = function(biturl) {
 
 // Get BTC prices
 
+var pricebtcbtce = 0;
+var pricebtcbitstamp = 0;
+
 var btceurl = 'https://btc-e.com/api/3/ticker/btc_usd';
 var bitstampurl = 'https://www.bitstamp.net/api/ticker/';
 
@@ -53,6 +56,7 @@ var btceapi = function(biturl) {
         method: 'JSONP',
         url: btceurl
       });
+      pricebtcbtce = result.btc_usd.last;
     };
 
 var bitstampapi = function(biturl) {
@@ -60,11 +64,12 @@ var bitstampapi = function(biturl) {
         method: 'JSONP',
         url: bitstampurl
       });
+      pricebtcbitstamp = result.last;
     };
     
 
-var pricebtcbtce = btceapi.btc_usd.last;
-var pricebtcbitstamp = bitstampapi.last;   
+//var pricebtcbtce = btceapi.btc_usd.last;
+//var pricebtcbitstamp = bitstampapi.last;   
     
 // Calc the averages and final price
 
