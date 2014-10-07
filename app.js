@@ -30,6 +30,7 @@ var bittrexapi = function(biturl) {
         method: 'GET',
         url: biturl
       });
+      pricesysbittrex = result.Last;
     };
 
 var cryptsyapi = function(biturl) {
@@ -40,7 +41,7 @@ var cryptsyapi = function(biturl) {
       pricesyscryptsy = result.market.SYS.last;
     };
 
-var pricesysbittrex = bittrexapi.result.Last;
+//var pricesysbittrex = bittrexapi.result.Last;
 
 // Get BTC prices
 
