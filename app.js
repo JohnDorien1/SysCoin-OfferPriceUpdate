@@ -95,8 +95,10 @@ var reqGet = https.request(optionsgeta, function(res) {
                       //pricebtcbitstamp = rawbitstamp.last;
                       
                       console.log('bittrex price result: ', pricesysbittrex);
-                      process.stdout.write(rawcryptsy);
+                      //process.stdout.write(rawcryptsy);
+                      console.log('raw btce: ');
                       process.stdout.write(rawbtce);
+                      console.log('raw bitstamp: ');
                       process.stdout.write(rawbitstamp);
                       
                       var sysprice = (pricesysbittrex + pricesyscryptsy) / 2;
