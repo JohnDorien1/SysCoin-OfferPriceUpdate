@@ -112,9 +112,25 @@ var reqGet = https.request(optionsgeta, function(res) {
                       });
                     });
                   });
+                  reqGet.end();
+                  reqGet.on('error', function(e) {
+                    console.error(e);
+                  });
                 });
+              });
+              reqGet.end();
+              reqGet.on('error', function(e) {
+                console.error(e);
               });
             });
         });
+        reqGet.end();
+        reqGet.on('error', function(e) {
+          console.error(e);
+        });
     });
+});
+reqGet.end();
+reqGet.on('error', function(e) {
+    console.error(e);
 });
