@@ -76,7 +76,6 @@ var reqGet = https.request(optionsgeta, function(res) {
     //console.log("statusCode: ", res.statusCode);
     res.on('data', function(d) {
         rawbittrex = d;
-        process.stdout.write(rawbittrex);
         var reqGet = http.request(optionsgetb, function(res) {
             res.on('data', function(d) {
               rawcryptsy = d;
@@ -88,7 +87,16 @@ var reqGet = https.request(optionsgeta, function(res) {
                       rawbitstamp = d;
                       console.log('raw of stamp: ', rawbitstamp);
                       // Calc the averages and final price
-
+                      pricsysbittrex = rawbittrex.result.Last;
+                      pricesyscryptsy = rawcryptsy.result.market.SYS.lasttradeprice;
+                      pricebtcbtce = rawbtce.btc_usd.last;
+                      pricebtcbitstamp = rawbitstamp.last;
+                      
+                      console.log('bittrex price result: ', pricesysbittrex);
+                      process.stdout.write(rawbittrex);
+                      process.stdout.write(rawbittrex);
+                      
+                      
                       var sysprice = (pricesysbittrex + pricesyscryptsy) / 2;
                       var btcprice = (pricebtcbtce + pricebtcbitstamp) / 2;
 
