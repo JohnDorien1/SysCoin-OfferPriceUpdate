@@ -73,21 +73,36 @@ var optionsgetd = {
 
 ///////// API requests & Calcs //////////
 var reqGet = https.request(optionsgeta, function(res) {
-    //console.log("statusCode: ", res.statusCode);
-    res.on('data', function(d) {
-        rawbittrex = d;
+    var responseString = '';
+    res.on('data', function(data) {
+      responseString += data;
+    });
+    res.on('end', function() {
+        rawbittrex = JSON.parse(responseString);
         var reqGet = http.request(optionsgetb, function(res) {
-            res.on('data', function(d) {
-              rawcryptsy = d;
+          var responseString = '';
+          res.on('data', function(data) {
+            responseString += data;
+          });
+          res.on('end', function() {
+              rawcryptsy = JSON.parse(responseString);
               var reqGet = https.request(optionsgetc, function(res) {
-                res.on('data', function(d) {
-                  rawbtce = d;
+                var responseString = '';
+                res.on('data', function(data) {
+                  responseString += data;
+                });
+                res.on('end', function() {
+                  rawbtce = JSON.parse(responseString);
                   var reqGet = https.request(optionsgetd, function(res) {
-                    res.on('data', function(d) {
-                      rawbitstamp = d;
+                    var responseString = '';
+                    res.on('data', function(data) {
+                      responseString += data;
+                    });
+                      res.on('end', function() {
+                      rawbitstamp = JSON.parse(responseString);
                       //console.log('raw of stamp: ', rawbitstamp);
                       // Calc the averages and final price
-                      rawbittrex = JSON.parse(rawbittrex);
+                      
                       console.log('JSON parsed rawbittrex: ', rawbittrex);
                       pricsysbittrex = rawbittrex.result.Last;
                       //pricesyscryptsy = rawcryptsy.result['market']['SYS']['lasttradeprice'];
