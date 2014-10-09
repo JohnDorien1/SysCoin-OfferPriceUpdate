@@ -78,7 +78,7 @@ var reqGet = https.request(optionsgeta, function(res) {
       responseString += data;
     });
     res.on('end', function() {
-        rawbittrex = JSON.stringify(responseString);
+        rawbittrex = JSON.parse(responseString);
         var reqGet = http.request(optionsgetb, function(res) {
           var responseString = '';
           res.on('data', function(data) {
@@ -104,7 +104,7 @@ var reqGet = https.request(optionsgeta, function(res) {
                       // Calc the averages and final price
                       
                       console.log('JSON parsed rawbittrex: ', rawbittrex);
-                      pricsysbittrex = rawbittrex.result["Last"];
+                      pricsysbittrex = rawbittrex["result"]["Last"];
                       
                       console.log('bittrex price result: ', pricesysbittrex);
                       //process.stdout.write(rawcryptsy);
