@@ -116,6 +116,3 @@ var reqGet = https.request(optionsgeta, function(res) {
         });
     });
 });
-
-console.log('This is bittrex result: ', rawbittrex)
-//////////// End of Bittrex call ////////////////////
