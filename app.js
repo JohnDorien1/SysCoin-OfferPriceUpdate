@@ -105,15 +105,17 @@ var reqGet = https.request(optionsgeta, function(res) {
                       
                       console.log('JSON parsed rawbittrex: ', rawbittrex);
                       pricesysbittrex = rawbittrex["result"]["Last"];
-                      
-                      console.log('bittrex price result: ', pricesysbittrex);
+                      pricesyscryptsy = rawcryptsy["return"]["markets"]["SYS"]["lasttradeprice"];
+                      pricebtcbtce = rawbtce["btc_usd"]["last"];
+                      pricebtcbitstamp = rawbitstamp["last"];
+                      //console.log('btce price result: ', pricebtcbtce);
                       //process.stdout.write(rawcryptsy);
                       
                       var sysprice = (pricesysbittrex + pricesyscryptsy) / 2;
                       var btcprice = (pricebtcbtce + pricebtcbitstamp) / 2;
 
                       var price = offerprice / btcprice / sysprice;
-                      console.log('Bittrex Price: ', pricesysbittrex);
+                      console.log('cryptsy Price: ', pricesyscryptsy);
                       console.log('Bitstamp Price: ', pricebtcbitstamp);
                       console.log('Final price in SYS: ', price); // debug print for development
 
