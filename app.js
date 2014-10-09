@@ -73,24 +73,17 @@ var optionsgetd = {
 
 ///////// API requests & Calcs //////////
 var reqGet = https.request(optionsgeta, function(res) {
-    console.log("statusCode: ", res.statusCode);
-
+    //console.log("statusCode: ", res.statusCode);
     res.on('data', function(d) {
         rawbittrex = d;
-        console.log('Bittrex RAW: ', rawbittrex);
+        process.stdout.write(rawbittrex);
         var reqGet = http.request(optionsgetb, function(res) {
-            console.log("statusCode: ", res.statusCode);
-
             res.on('data', function(d) {
               rawcryptsy = d;
               var reqGet = https.request(optionsgetc, function(res) {
-                console.log("statusCode: ", res.statusCode);
-
                 res.on('data', function(d) {
                   rawbtce = d;
                   var reqGet = https.request(optionsgetd, function(res) {
-                    console.log("statusCode: ", res.statusCode);
-
                     res.on('data', function(d) {
                       rawbitstamp = d;
                       console.log('raw of stamp: ', rawbitstamp);
@@ -108,7 +101,7 @@ var reqGet = https.request(optionsgeta, function(res) {
 
                       sysclient.offerUpdate(offer, 0, price, offer.desc, function(err, response, resHandler){
                         if (err) return console.log(err);
-                          console.log('Update successful');
+                          console.log('Offer update successful');
                       });
                     });
                   });
