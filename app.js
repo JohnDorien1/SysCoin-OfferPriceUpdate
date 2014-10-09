@@ -6,6 +6,8 @@ var offerprice = 500;
 
 // init submodules
 var syscoin = require('syscoin');
+var https = require('https');
+var http = require('http');
 
 // init client handler
 
@@ -21,21 +23,32 @@ var sysclient = new syscoin.Client({
 
 var pricesyscryptsy = 0;
 var pricesysbittrex = 0;
+var rawbittrex = 'NIL';
+var rawcryptsy = 'NIL';
 
 var biturl='https://bittrex.com/api/v1.1/public/getticker?market=BTC-SYS';
 var cryptsyurl='http://pubapi.cryptsy.com/api.php?method=singlemarketdata&marketid=278';
 
-var bittrexapi = function(biturl, $http) {
-      return $http({
-        method: 'GET',
-        url: biturl
-      });
-      pricesysbittrex = result.Last;
-    };
+//////////// Call Bittrex API /////////////////////
+var optionsget = {
+    host : 'bittrex.com', // here only the domain name
+    // (no http/https !)
+    port : 443,
+    path : '/api/v1.1/public/getticker?market=BTC-SYS', // the rest of the url with parameters if needed
+    method : 'GET' // do GET
+};
 
-bittrexapi = new bittrexapi(biturl);
-console.log('BittrexAPI result: ', bittrexapi);
-bittrexapi.then();
+// do the GET request
+var reqGet = https.request(optionsget, function(res) {
+    console.log("statusCode: ", res.statusCode);
+
+    res.on('data', function(d) {
+        rawbittrex = d;
+    });
+});
+
+console.log('This is bittrex result: ', rawbittrex)
+//////////// End of Bittrex call ////////////////////
 
 var cryptsyapi = function(biturl) {
       return $http({
@@ -44,8 +57,6 @@ var cryptsyapi = function(biturl) {
       });
       pricesyscryptsy = result.market.SYS.last;
     };
-
-//var pricesysbittrex = bittrexapi.result.Last;
 
 // Get BTC prices
 
