@@ -80,7 +80,7 @@ var optionsgetd = {
 
 sysclient.offerInfo(offer, function(err, response, resHandler){
   if (err) return console.log(err);
-  console.log('OfferInfo successful');
+  //console.log('OfferInfo successful');
   offerdata = response;
   
   var reqGet = https.request(optionsgeta, function(res) {
@@ -117,10 +117,10 @@ sysclient.offerInfo(offer, function(err, response, resHandler){
                       pricebtcbtce = rawbtce["btc_usd"]["last"];
                       pricebtcbitstamp = rawbitstamp["last"];
                       
-                      console.log('bittrex price result: ', pricesysbittrex)
-                      console.log('cryptsy price result: ', pricesyscryptsy);
-                      console.log('btce price result: ', pricebtcbtce);
-                      console.log('bitstamp price result: ', pricebtcbitstamp);
+                      //console.log('bittrex price result: ', pricesysbittrex)
+                      //console.log('cryptsy price result: ', pricesyscryptsy);
+                      //console.log('btce price result: ', pricebtcbtce);
+                      //console.log('bitstamp price result: ', pricebtcbitstamp);
                       
                       var sysprice = ((parseFloat(pricesysbittrex) + parseFloat(pricesyscryptsy)) / 2);
                       var btcprice = ((parseFloat(pricebtcbtce) + parseFloat(pricebtcbitstamp)) / 2);
@@ -135,11 +135,11 @@ sysclient.offerInfo(offer, function(err, response, resHandler){
 			var lower = (price*(1-(parseFloat(maxdiffperc)/100)));
 			upper = upper.toFixed(7);
 			lower = lower.toFixed(7);
-			console.log('upper, then lower, then offer.price: ', upper, ' ', lower, ' ', offer.price);
-                        console.log('this is the offer: ', offerdata);
+			//console.log('upper, then lower, then offer.price: ', upper, ' ', lower, ' ', offer.price);
+                        //console.log('this is the offer: ', offerdata);
 			// update the offer
                       if((parseFloat(offerdata.price) >= upper) || parseFloat(offerdata.price) <= lower) {
-                        console.log('IF clause matched!');
+                        //console.log('IF clause matched!');
                         if(islocked == 1) client.walletpassphrase(islockedpw, 1000, function(err,result,resHeaders){});
 			sysclient.offerUpdate(offerdata.id, offerdata.category, offerdata.title, '0', price, offerdata.description, function(err, response, resHandler){
                           if (err) return console.log(err);
