@@ -2,7 +2,7 @@
 
 var offer = 'Put your offer ID here';
 var offerprice = 500; // Price per piece of you offer; Currency: USD
-var maxdiffperc = 3; // maximum tolerated price diff without performing offer update; in percent
+var maxdiffperc = 1; // maximum tolerated price diff without performing offer update; in percent
 
 // init submodules
 var syscoin = require('syscoin');
@@ -13,9 +13,9 @@ var http = require('http');
 
 var sysclient = new syscoin.Client({
   host: 'localhost',
-  port: 8368,
-  user: 'username',
-  pass: 'password',
+  port: 1111,
+  user: 'user',
+  pass: 'pass',
   timeout: 180000
 });
 
@@ -125,12 +125,19 @@ sysclient.offerInfo(offer, function(err, response, resHandler){
                       console.log('final avg. btc price: ', btcprice);
 
                       var price = (offerprice / btcprice / sysprice);
-                      price.toFixed(8);
+                      price = price.toFixed(7);
                       console.log('Final price in SYS: ', price); // debug print for development
 
-                      // update the offer
-                      if((offer.price > (price*(1+(maxdiffperc/100)))) || offer.price < (price*(1-(maxdiffperc/100)))) {
-                        sysclient.offerUpdate(offer, 0, price, offer.desc, function(err, response, resHandler){
+			var upper = (price*(1+(parseFloat(maxdiffperc)/100)));
+			var lower = (price*(1-(parseFloat(maxdiffperc)/100)));
+			upper = upper.toFixed(7);
+			lower = lower.toFixed(7);
+			console.log('upper, then lower, then offer.price: ', upper, ' ', lower, ' ', offer.price);
+                        console.log('this is the offer: ', offerdata);
+			// update the offer
+                      if((parseFloat(offerdata.price) >= upper) || parseFloat(offerdata.price) <= lower) {
+                        console.log('IF clause matched!');
+			sysclient.offerUpdate(offerdata.id, offerdata.category, offerdata.title, '0', price, offerdata.description, function(err, response, resHandler){
                           if (err) return console.log(err);
                             console.log('Offer update successful');
                         });
