@@ -2,7 +2,7 @@
 
 var offer = 'Put your offer ID here';
 var offerprice = 500; // Price per piece of you offer; Currency: USD
-
+var maxdiffperc = 3; // maximum tolerated price diff without performing offer update; in percent
 
 // init submodules
 var syscoin = require('syscoin');
@@ -18,6 +18,8 @@ var sysclient = new syscoin.Client({
   pass: 'password',
   timeout: 180000
 });
+
+var offerdata = '';
 
 // Get SYS Prices
 
@@ -72,7 +74,13 @@ var optionsgetd = {
 ////////// End of API options ///////////
 
 ///////// API requests & Calcs //////////
-var reqGet = https.request(optionsgeta, function(res) {
+
+sysclient.offerInfo(offer, function(err, response, resHandler){
+  if (err) return console.log(err);
+  console.log('OfferInfo successful');
+  offerdata = response;
+  
+  var reqGet = https.request(optionsgeta, function(res) {
     var responseString = '';
     res.on('data', function(data) {
       responseString += data;
@@ -100,9 +108,6 @@ var reqGet = https.request(optionsgeta, function(res) {
                     });
                       res.on('end', function() {
                       rawbitstamp = JSON.parse(responseString);
-                      //console.log('raw of stamp: ', rawbitstamp);
-                      // Calc the averages and final price
-                      //console.log('JSON parsed rawbittrex: ', rawbittrex);
                       
                       pricesysbittrex = rawbittrex["result"]["Last"];
                       pricesyscryptsy = rawcryptsy["return"]["markets"]["SYS"]["lasttradeprice"];
@@ -113,7 +118,6 @@ var reqGet = https.request(optionsgeta, function(res) {
                       console.log('cryptsy price result: ', pricesyscryptsy);
                       console.log('btce price result: ', pricebtcbtce);
                       console.log('bitstamp price result: ', pricebtcbitstamp);
-                      //process.stdout.write(rawcryptsy);
                       
                       var sysprice = ((parseFloat(pricesysbittrex) + parseFloat(pricesyscryptsy)) / 2);
                       var btcprice = ((parseFloat(pricebtcbtce) + parseFloat(pricebtcbitstamp)) / 2);
@@ -125,11 +129,12 @@ var reqGet = https.request(optionsgeta, function(res) {
                       console.log('Final price in SYS: ', price); // debug print for development
 
                       // update the offer
-
-                      sysclient.offerUpdate(offer, 0, price, offer.desc, function(err, response, resHandler){
-                        if (err) return console.log(err);
-                          console.log('Offer update successful');
-                      });
+                      if((offer.price > (price*(1+(maxdiffperc/100)))) || offer.price < (price*(1-(maxdiffperc/100)))) {
+                        sysclient.offerUpdate(offer, 0, price, offer.desc, function(err, response, resHandler){
+                          if (err) return console.log(err);
+                            console.log('Offer update successful');
+                        });
+                      };
                     });
                   });
                   reqGet.end();
@@ -149,8 +154,9 @@ var reqGet = https.request(optionsgeta, function(res) {
           console.error(e);
         });
     });
-});
-reqGet.end();
-reqGet.on('error', function(e) {
+  });
+  reqGet.end();
+  reqGet.on('error', function(e) {
     console.error(e);
+  });
 });
