@@ -116,11 +116,12 @@ var reqGet = https.request(optionsgeta, function(res) {
                       //process.stdout.write(rawcryptsy);
                       
                       var sysprice = ((parseFloat(pricesysbittrex) + parseFloat(pricesyscryptsy)) / 2);
-                      var btcprice = ((parseFloat(pricebtcbtce + parseFloat(pricebtcbitstamp)) / 2);
+                      var btcprice = ((parseFloat(pricebtcbtce) + parseFloat(pricebtcbitstamp)) / 2);
                       console.log('final avg. sys price: ', sysprice);
                       console.log('final avg. btc price: ', btcprice);
 
                       var price = (offerprice / btcprice / sysprice);
+                      price.toFixed(8);
                       console.log('Final price in SYS: ', price); // debug print for development
 
                       // update the offer
