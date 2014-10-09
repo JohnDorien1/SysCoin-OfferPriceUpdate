@@ -89,7 +89,7 @@ var reqGet = https.request(optionsgeta, function(res) {
                       // Calc the averages and final price
                       rawbittrex = JSON.parse(rawbittrex);
                       console.log('JSON parsed rawbittrex: ', rawbittrex);
-                      pricsysbittrex = rawbittrex.result['Last'];
+                      pricsysbittrex = rawbittrex.result.Last;
                       //pricesyscryptsy = rawcryptsy.result['market']['SYS']['lasttradeprice'];
                       //pricebtcbtce = rawbtce.btc_usd.last;
                       //pricebtcbitstamp = rawbitstamp.last;
