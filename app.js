@@ -1,7 +1,7 @@
 //configs
 
 var offer = 'Put your offer ID here';
-var offerprice = 500;
+var offerprice = 500; // Price per piece of you offer; Currency: USD
 
 
 // init submodules
@@ -69,13 +69,15 @@ var optionsgetd = {
     path : '/api/ticker/', // the rest of the url with parameters if needed
     method : 'GET' // do GET
 };
+////////// End of API options ///////////
 
-// do the GET request
+///////// API requests & Calcs //////////
 var reqGet = https.request(optionsgeta, function(res) {
     console.log("statusCode: ", res.statusCode);
 
     res.on('data', function(d) {
         rawbittrex = d;
+        console.log('Bittrex RAW: ', rawbittrex);
         var reqGet = http.request(optionsgetb, function(res) {
             console.log("statusCode: ", res.statusCode);
 
