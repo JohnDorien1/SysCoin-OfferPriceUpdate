@@ -4,6 +4,9 @@ var offer = 'Put your offer ID here';
 var offerprice = 500; // Price per piece of you offer; Currency: USD
 var maxdiffperc = 1; // maximum tolerated price diff without performing offer update; in percent
 
+var islocked = 0; // Change to 1 if your wallet is encrypted
+var islockedpw = 'mywalletpass';  // Change this to your wallet passphrase if encrypted
+
 // init submodules
 var syscoin = require('syscoin');
 var https = require('https');
@@ -137,10 +140,12 @@ sysclient.offerInfo(offer, function(err, response, resHandler){
 			// update the offer
                       if((parseFloat(offerdata.price) >= upper) || parseFloat(offerdata.price) <= lower) {
                         console.log('IF clause matched!');
+                        if(islocked == 1) client.walletpassphrase(islockedpw, 1000, function(err,result,resHeaders){});
 			sysclient.offerUpdate(offerdata.id, offerdata.category, offerdata.title, '0', price, offerdata.description, function(err, response, resHandler){
                           if (err) return console.log(err);
                             console.log('Offer update successful');
                         });
+                        if(islocked == 1) client.walletlock();
                       };
                     });
                   });
