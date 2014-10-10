@@ -140,12 +140,12 @@ sysclient.offerInfo(offer, function(err, response, resHandler){
 			// update the offer
                       if((parseFloat(offerdata.price) >= upper) || parseFloat(offerdata.price) <= lower) {
                         //console.log('IF clause matched!');
-                        if(islocked == 1) client.walletpassphrase(islockedpw, '1000', function(err,result,resHeaders){});
+                        if(islocked == 1) client.walletPassphrase(islockedpw, '2000', function(err,result,resHeaders){});
 			sysclient.offerUpdate(offerdata.id, offerdata.category, offerdata.title, '0', price, offerdata.description, function(err, response, resHandler){
                           if (err) return console.log(err);
                             console.log('Offer update successful');
                         });
-                        if(islocked == 1) client.walletlock();
+                        if(islocked == 1) client.walletLock();
                       };
                     });
                   });
