@@ -7,6 +7,8 @@ var maxdiffperc = 1; // maximum tolerated price diff without performing offer up
 var islocked = 0; // Change to 1 if your wallet is encrypted
 var islockedpw = 'mywalletpass';  // Change this to your wallet passphrase if encrypted
 
+var override_apierror = 0; // change to 1 if you like to override one of the exhange api's to fail
+
 // init submodules
 var syscoin = require('syscoin');
 var https = require('https');
@@ -117,6 +119,22 @@ sysclient.offerInfo(offer, function(err, response, resHandler){
                       pricebtcbtce = rawbtce["btc_usd"]["last"];
                       pricebtcbitstamp = rawbitstamp["last"];
                       
+                      if (override_apierror = 1){
+                      	if (isNaN(pricesysbittrex)){
+                      		pricesysbittrex = pricesyscryptsy;
+                      	}
+                      	if (isNaN(pricesyscryptsy)){
+                      		pricesyscryptsy = pricesysbittrex;
+                      	}
+                      	if (isNaN(pricebtcbtce)){
+                      		pricebtcbtce = pricebtcbitstamp;
+                      	}
+                      	if (isNaN(pricebtcbitstamp)){
+                      		pricebtcbitstamp = pricebtcbtce;
+                      	}
+                      }
+                      	}
+                      	
                       //console.log('bittrex price result: ', pricesysbittrex)
                       //console.log('cryptsy price result: ', pricesyscryptsy);
                       //console.log('btce price result: ', pricebtcbtce);
