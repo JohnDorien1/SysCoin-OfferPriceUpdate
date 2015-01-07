@@ -91,29 +91,36 @@ sysclient.offerInfo(offer, function(err, response, resHandler){
       responseString += data;
     });
     res.on('end', function() {
+    	try {
         rawbittrex = JSON.parse(responseString);
+        }catch (e) {}
         var reqGet = http.request(optionsgetb, function(res) {
           var responseString = '';
           res.on('data', function(data) {
             responseString += data;
           });
           res.on('end', function() {
+              try {	
               rawcryptsy = JSON.parse(responseString);
+              }catch (e) {}
               var reqGet = https.request(optionsgetc, function(res) {
                 var responseString = '';
                 res.on('data', function(data) {
                   responseString += data;
                 });
                 res.on('end', function() {
+                  try {	
                   rawbtce = JSON.parse(responseString);
+                  }catch (e) {}
                   var reqGet = https.request(optionsgetd, function(res) {
                     var responseString = '';
                     res.on('data', function(data) {
                       responseString += data;
                     });
                       res.on('end', function() {
+                      try {	
                       rawbitstamp = JSON.parse(responseString);
-                      
+                      }catch (e) {}
                       pricesysbittrex = rawbittrex["result"]["Last"];
                       pricesyscryptsy = rawcryptsy["return"]["markets"]["SYS"]["lasttradeprice"];
                       pricebtcbtce = rawbtce["btc_usd"]["last"];
