@@ -119,7 +119,7 @@ sysclient.offerInfo(offer, function(err, response, resHandler){
                       pricebtcbtce = rawbtce["btc_usd"]["last"];
                       pricebtcbitstamp = rawbitstamp["last"];
                       
-                      if (override_apierror = 1){
+                      if (override_apierror == 1){
                       	if (isNaN(pricesysbittrex)){
                       		pricesysbittrex = pricesyscryptsy;
                       	}
